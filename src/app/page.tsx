@@ -4,7 +4,7 @@
 export default function HomePage() {
   return (
 
-    <div>Hello guys</div>
+    <div>Hello guys I'm VanQuoc</div>
 
   );
 }

@@ -2,7 +2,7 @@
 
 const PlaylistPage = () => {
     return (
-        <div>PlaylistPage</div>
+        <div>Playlist Page</div>
     )
 }
 
