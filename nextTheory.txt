@@ -1,0 +1,3 @@
+
+- Phong cách code MUI: có thể code CSS với Javascript (styled component) (CSS trong JSX/TSX)
+    => tương tự React Native
