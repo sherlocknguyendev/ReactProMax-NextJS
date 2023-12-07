@@ -1,5 +1,7 @@
 
 // layout: share layout giữa các page con (tái sử dụng layout)
+import AppFooter from '@/components/footer/app.footer';
+import AppHeader from '@/components/header/app.header';
 import ThemeRegistry from '@/components/theme-registry/theme.registry';
 
 
@@ -8,7 +10,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <ThemeRegistry>
+          <AppHeader />
           {children}
+          <AppFooter />
         </ThemeRegistry>
       </body>
     </html>

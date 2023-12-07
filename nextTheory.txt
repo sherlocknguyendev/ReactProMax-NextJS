@@ -1,3 +1,29 @@
 
 - Phong cách code MUI: có thể code CSS với Javascript (styled component) (CSS trong JSX/TSX)
     => tương tự React Native.
+
+- Link Component/useRouter hook:
+    -> Link: điều hướng trực tiếp trong phần view
+    -> useRouter: khi muốn xử lý logic xog ms điều hướng (trong 1 function)
+
+- Server Component chỉ đơn thuần là HTML (không có sự tương tác của Javascript)
+    => Mặc định, tất cả “component” của Nextjs, là Server Component, Server component có thể bọc “Client component”
+    => Không dùng các function xử lý sự kiện hay các hook của React
+    => Lợi ích của server component:
+        - Tốc độ load page nhanh
+        - Cache
+        - Security
+        - SEO
+    => Xảy ra từ khi có React 18 hỗ trợ phía server (biến đổi Component thông thường thành HTML xog ms render ra browser)
+    => Server Component: Render 100% trên server, tạo ra file HTML gửi về cho client. Client chỉ việc hiển thị mà không cần làm gì khác
+
+- Client Component: Giúp có sự tương tác với website (ví dụ: useStatae, useEffect, ...)
+
+- 'use client': kết hợp Server Component vs Client Component, use client: không có nghĩa là 100% component sẽ được render ở phía client như CSR
+    -   Phase 1: pre-render (vẽ trước)
+            Nextjs sẽ tạo trước file HTML mà không có sự tương tác của JS, sau đấy gửi về client 
+            (như vậy được ½ quá trình) -> Server Component
+    -   Phase 2: hidrate (tưới cây)
+            Client nhận về file HTML đã được render trước từ Nextjs, sau đấy dùng React để thêm 
+            phần tương tác JavaScript -> Client Component
+ 
