@@ -6,6 +6,8 @@
     -> Link: điều hướng trực tiếp trong phần view
     -> useRouter: khi muốn xử lý logic xog ms điều hướng (trong 1 function)
 
+-------------------------------------------------------------------------------------
+
 - Server Component chỉ đơn thuần là HTML (không có sự tương tác của Javascript)
     => Mặc định, tất cả “component” của Nextjs, là Server Component, Server component có thể bọc “Client component”
     => Không dùng các function xử lý sự kiện hay các hook của React
@@ -26,4 +28,28 @@
     -   Phase 2: hidrate (tưới cây)
             Client nhận về file HTML đã được render trước từ Nextjs, sau đấy dùng React để thêm 
             phần tương tác JavaScript -> Client Component
+
+---------------------------------------------------------------------------------
+
+- CORS === Cross-Origin Resource Sharing: Chia sẻ tài nguyên đa nguồn 
+    -> CORS là cơ chế "mặc định" của trình duyệt web (browser) khi muốn gọi/truy cập thông tin mà khác tên miền (domain)
+    -> Ví dụ: + khi muốn chia sẻ dữ liệu của ng dùng từ google.com gọi sang facebook.com  -> browser chặn CORS
+              + từ localhost:3000 -> gọi localhost:8000 -> chặn CORS
+    
+- CORS chỉ xảy ra tại browser, giúp duyệt/lướt web trở nên an toàn hơn.
+
+- Mặc địch browser bật chặn CORS vì: 
+    -> Với browser, khi bạn truy cập/gọi tới 1 domain của 1 website bất kỳ, browser sẽ tự động gửi cookies kèm theo (cookie tương ứng với website),
+       Browser có cookies, nên nếu không chặn CORS, sẽ tìm ẩn nguy cơ ăn trộm cookies (cookies chứa thông tin cá nhân)
+
+- Khắc phục CORS:
+    -> Nếu bạn sử dụng cơ chế client (browser) -> gọi Server để lấy dữ liệu thì fix lỗi CORS trên server
+    -> Nếu bạn không code backend, có thể fix = cách disable cors của browser (NOT recommended)
+    -> Sử dụng same domain, hoặc server gọi tới server
+
+----------------------------------------------------------------------------------------
+
+- The 'useMemo' and 'useCallback' Hooks are similar. (Hãy coi việc ghi nhớ như việc lưu vào bộ nhớ đệm một giá trị để không cần phải tính toán lại - mỗi khi component render lại thì k chạy giá trị đó nữa (trừ khi các deps thay đổi))
+  -> The main difference is that useMemo returns a memoized value and useCallback returns a memoized function
+  -> The useMemo Hook only runs when one of its dependencies update.
  

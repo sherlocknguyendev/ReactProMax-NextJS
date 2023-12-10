@@ -10,6 +10,7 @@ import Button from "@mui/material/Button/Button";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Divider from '@mui/material/Divider';
+import Link from "next/link";
 
 interface IProps {
     data: ITrackTop[],
@@ -86,7 +87,9 @@ const MainSlider = (props: IProps) => {
                     return (
                         <div className="track" key={item._id}>
                             <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${item.imgUrl}`} alt="" />
-                            <h4>{item.title}</h4>
+                            <Link href={`/track/${item._id}?audio=${item.trackUrl}`}>
+                                <h4>{item.title}</h4>
+                            </Link>
                             <h5>{item.description}</h5>
                         </div>
                     )
