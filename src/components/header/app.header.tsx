@@ -12,7 +12,6 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
@@ -20,6 +19,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Avatar, Container } from '@mui/material';
 import Link from 'next/link';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 
 // Search này là ví dụ cho styled-component
@@ -65,12 +65,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function AppHeader() {
+
+    // Lấy session phía client (hook)
+    //session hiểu đơn giản là dữ liệu của ng dùng đã đc mã hóa
+    const { data: session } = useSession(); // dùng useSession để lấy ra session đã lưu
+    // console.log('check session: ', session);
+
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
 
+
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -112,7 +121,10 @@ export default function AppHeader() {
                     Profile
                 </Link>
             </MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            <MenuItem onClick={() => {
+                handleMenuClose();
+                signOut();
+            }}>Logout</MenuItem>
         </Menu>
     );
 
@@ -211,17 +223,26 @@ export default function AppHeader() {
                                 textDecoration: 'unset'
                             }
                         }}>
+                            {session ? <>
+                                <Link href={'/playlist'}>
+                                    Playlists
+                                </Link>
+                                <Link href={'/like'}>
+                                    Likes
+                                </Link>
+                                <span>Upload</span>
 
-                            <Link href={'/playlist'}>
-                                Playlists
-                            </Link>
-                            <Link href={'/like'}>
-                                Likes
-                            </Link>
-                            <span>Upload</span>
 
+                                <Avatar onClick={handleProfileMenuOpen}>VQ</Avatar>
+                            </>
+                                :
+                                <>
+                                    <Link href={'/auth/signin'} >
+                                        Login
+                                    </Link>
+                                </>
+                            }
 
-                            <Avatar onClick={handleProfileMenuOpen}>VQ</Avatar>
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton

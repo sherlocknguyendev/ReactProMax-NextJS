@@ -29,7 +29,7 @@
             Client nhận về file HTML đã được render trước từ Nextjs, sau đấy dùng React để thêm 
             phần tương tác JavaScript -> Client Component
 
----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 
 - CORS === Cross-Origin Resource Sharing: Chia sẻ tài nguyên đa nguồn 
     -> CORS là cơ chế "mặc định" của trình duyệt web (browser) khi muốn gọi/truy cập thông tin mà khác tên miền (domain)
@@ -47,9 +47,47 @@
     -> Nếu bạn không code backend, có thể fix = cách disable cors của browser (NOT recommended)
     -> Sử dụng same domain, hoặc server gọi tới server
 
-----------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 
 - The 'useMemo' and 'useCallback' Hooks are similar. (Hãy coi việc ghi nhớ như việc lưu vào bộ nhớ đệm một giá trị để không cần phải tính toán lại - mỗi khi component render lại thì k chạy giá trị đó nữa (trừ khi các deps thay đổi))
   -> The main difference is that useMemo returns a memoized value and useCallback returns a memoized function
   -> The useMemo Hook only runs when one of its dependencies update.
  
+ -------------------------------------------------------------------------------------
+
+ - Thư viện next-auth: Hỗ trợ cơ chế stateful (session) và stateless (JWT - json web token) 
+ 
+
+
+ - Luồng chạy:
+    Bước 1: Nextjs (backend) + Next-auth => tự động tạo thêm các route cần thiết 
+    Bước 2: User nhấn login (http://localhost:3000/api/auth/signin)
+    Bước3: Next auth redirect to Provider. Quá trình user login được thực hiện tại Provider (tính bảo mật cao/tăng độ tin cậy)
+    Bước 4: User login thành công "tại Provider", Provider sẽ trigger callback URL (đã cấu 
+    hình trên provider)
+    Bước 5: Nextjs nhận được trigger (dữ liệu) từ provider => Sau khi nhận được thông tin user từ Provider (bước 5), Nextjs sẽ lưu thông tin này vào 
+            cookies, dưới dạng jwt (json web token) ở browser (tab application)
+    -> jwt này sẽ có secret (password) để giải mã, và chỉ mình server mới giải mã được,
+        Mỗi lần người dùng f5/refresh, client gửi lên server cookies (chứa jwt),
+        Server (next auth) sẽ decode jwt, và lưu thông tin này (users) vào session (session này có thể ở next auth or next server), (session sẽ gửi lại lên browser hoặc browser sẽ dựa vào session này để hiển thị ng dùng nếu có - tự đoán thế ^^)
+        Kể từ lúc này, tất cả logic code sẽ được xử lý dựa vào Session - thứ lưu trong memory của server
+
+
+
+- Vì database ở các Provider lưu và trả ít thông tin -> mình sẽ dùng 'thông tin' Provider trả về -> để gọi BE và DB (truyền 'thông tin định danh' như là email)
+  -> để tạo thêm account (nếu chưa cs trong DB) dựa trên 'thông tin' Provider trả về và 'lưu thêm nhiều thông tin' của người dùng hơn -> khi người dùng thao tác/refresh trang thì sẽ dùng thông tin 'nhận dạng' của Provider trả về và gọi BE để so sánh và lấy thông tin trong DB đã tạo
+
+    + 1. Khi user sử dụng Provider để login, và login thành công, chúng ta cần gọi backend. 
+        ở đây, chúng ta cần truyền lên "định danh" của người dùng, như là "email"
+    + 2. Backend check "định danh" của người dùng. Nếu chưa tồn tại, tạo 1 account, setup 
+        type = "PROVIDER"
+        ví dụ: tài khoản login với github, sẽ có type = "GITHUB"
+        tài khoản login thông thường (do hệ thống tự tạo), sẽ có type = "SYSTEM"
+        Sau khi đã xác định được tài khoản nằm trong database của backend 
+        => trả về thông tin như thông thường
+
+    + Ở đây, chúng ta đang lưu dữ liệu ở 2 nơi:
+        1 là Provider (lưu thông tin gốc của user)
+        2 là database backend do chúng ta kiểm soát.
+        Cần lưu tại 2 nơi, vì ví dụ, người dùng sau khi login sẽ tiến hành thao tác với hệ
+        thống => tạo user dễ quản lý (theo id)
