@@ -5,6 +5,14 @@ export { };
 
 declare global {
 
+    interface INewTrack {
+        title: string,
+        description: string,
+        trackUrl: string,
+        imgUrl: string,
+        category: string
+    }
+
     interface ITrackTop {
         "_id": string;
         "title": string;
@@ -52,5 +60,15 @@ declare global {
         },
         result: T[]
     }
+
+    interface IShareTrack extends ITrackTop {
+        isPlaying: boolean
+    }
+
+    interface ITrackContext {
+        currentTrack: IShareTrack,
+        setCurrentTrack: (v: IShareTrack) => void;
+    }
+
 
 }

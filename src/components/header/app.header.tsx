@@ -116,7 +116,7 @@ export default function AppHeader() {
             onClose={handleMenuClose}
         >
             <MenuItem>
-                <Link href={'/profile'} style={{ textDecoration: 'unset', color: 'unset' }}>
+                <Link href={`/profile/${session?.user._id}`} style={{ textDecoration: 'unset', color: 'unset' }}>
                     {/* Dùng style thay vì sx vì Component Link thuộc về NextJS (sx thuộc về MUI) */}
                     Profile
                 </Link>
@@ -230,7 +230,9 @@ export default function AppHeader() {
                                 <Link href={'/like'}>
                                     Likes
                                 </Link>
-                                <span>Upload</span>
+                                <Link href={'/track/upload'}>
+                                    Upload
+                                </Link>
 
 
                                 <Avatar onClick={handleProfileMenuOpen}>VQ</Avatar>

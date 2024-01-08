@@ -5,25 +5,35 @@ import { useWavesurfer } from '@/ultis/customHook';
 import { useSearchParams } from 'next/navigation';
 import { WaveSurferOptions } from 'wavesurfer.js';
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
-import { PauseCircleSharp, PlayArrowSharp } from '@mui/icons-material';
+import { Key, PauseCircleSharp, PlayArrowSharp } from '@mui/icons-material';
 
 import './wave.track.scss'
 import { Tooltip } from '@mui/material';
+import { sendRequest } from '@/ultis/api';
+import { useTrackContext } from '@/lib/track.wrapper';
 
+
+interface IProps {
+    track: ITrackTop | null
+}
 
 // Component
-const WaveTrack = () => {
+const WaveTrack = (props: IProps) => {
+
+    const { track } = props;
+    const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext;
 
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
     const [time, setTime] = useState<string>('00:00')
     const [duraion, setDuration] = useState<string>('00:00')
 
     const searchParams = useSearchParams()
+
     const audio = searchParams.get('audio') // lấy tham số truyền vào trên url 
+    const id = searchParams.get('id')
 
     const containerRef = useRef<HTMLDivElement>(null)
     const hoverWaveRef = useRef<HTMLDivElement>(null)
-
 
 
     const optionsMemo = useMemo((): Omit<WaveSurferOptions, 'container'> => { // useMemo: Ghi nhớ và trả về giá trị (value) -> tránh render k cần thiết
@@ -147,6 +157,17 @@ const WaveTrack = () => {
         return `${percent}%`
     }
 
+    useEffect(() => {
+        if (wavesurfer && currentTrack.isPlaying) {
+            wavesurfer.pause()
+        }
+    }, [currentTrack])
+
+    useEffect(() => {
+        if (track?._id && !currentTrack?._id) {
+            setCurrentTrack({ ...track, isPlaying: false })
+        }
+    }, [track])
 
     return (
         <div style={{ marginTop: 20 }}>
@@ -162,7 +183,12 @@ const WaveTrack = () => {
                 <div className='left-content' style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div className='top-left' style={{ display: 'flex', gap: 20 }}>
                         <div
-                            onClick={() => onPlayClick()}
+                            onClick={() => {
+                                onPlayClick()
+                                if (track && wavesurfer) {
+                                    setCurrentTrack({ ...track, isPlaying: false })
+                                }
+                            }}
                             style={{
                                 borderRadius: '50%',
                                 cursor: 'pointer',
@@ -187,11 +213,11 @@ const WaveTrack = () => {
                         </div>
 
                         <div>
-                            <div style={{ backdropFilter: 'brightness(0.5)', fontSize: 30, color: 'white' }}>
-                                This is new song
+                            <div style={{ backdropFilter: 'brightness(0.5)', fontSize: 30, color: 'white', padding: '4px' }}>
+                                {track?.title}
                             </div>
-                            <div style={{ backdropFilter: 'brightness(0.5)', fontSize: 20, color: 'white', marginTop: 8 }}>
-                                I'm Van Quoc
+                            <div style={{ backdropFilter: 'brightness(0.5)', fontSize: 20, color: 'white', marginTop: 8, padding: '4px', width: 'fit-content' }}>
+                                {track?.description}
                             </div>
                         </div>
                     </div>
@@ -212,7 +238,7 @@ const WaveTrack = () => {
                         <div className='comments' style={{ position: 'relative' }}>
                             {arrComments.map(item => {
                                 return (
-                                    <Tooltip arrow title={`${item.user}: ${item.content}`}>
+                                    <Tooltip arrow title={`${item.user}: ${item.content}`} key={item.id}>
                                         <img
                                             onPointerMove={(e) => {
                                                 const hoverWave = hoverWaveRef.current!;

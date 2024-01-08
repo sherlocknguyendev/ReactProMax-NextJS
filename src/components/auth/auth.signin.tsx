@@ -69,9 +69,9 @@ const AuthSignIn = () => {
 
         <Box sx={{
             marginTop: '80px',
-            backgroundImage: 'linear-gradient(to bottom, #ff9aef, #fedac1, #d5e1cf, #b7e6d9',
-            backgroundColor: '#b7e6d9',
-            backgroundRepeat: 'no-repeat'
+            // backgroundImage: 'linear-gradient(to bottom, #ff9aef, #fedac1, #d5e1cf, #b7e6d9',
+            // backgroundColor: '#b7e6d9',
+            // backgroundRepeat: 'no-repeat'
         }} >
 
             <Grid

@@ -32,7 +32,7 @@ export default async function HomePage() {
 
   return (
 
-    <div>
+    <div style={{ marginBottom: 70 }}>
       <Container>
         <MainSlider title={'Top Chills'} data={chills?.data ?? []} />
         <MainSlider title={'Top Workouts'} data={workouts?.data ?? []} />
