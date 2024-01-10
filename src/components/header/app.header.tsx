@@ -20,6 +20,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Avatar, Container } from '@mui/material';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { fetchDefaultImages } from '@/ultis/api';
 
 
 // Search này là ví dụ cho styled-component
@@ -234,8 +235,16 @@ export default function AppHeader() {
                                     Upload
                                 </Link>
 
-
-                                <Avatar onClick={handleProfileMenuOpen}>VQ</Avatar>
+                                <img
+                                    onClick={handleProfileMenuOpen}
+                                    style={{
+                                        height: 45,
+                                        width: 45,
+                                        cursor: 'pointer'
+                                    }}
+                                    src={fetchDefaultImages(session.user.type)}
+                                />
+                                {/* <Avatar onClick={handleProfileMenuOpen}>VQ</Avatar> */}
                             </>
                                 :
                                 <>

@@ -9,6 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <>
       <AppHeader />
       {children}
+      <div style={{ marginBottom: '200px' }}></div>
       <AppFooter />
     </>
   );
