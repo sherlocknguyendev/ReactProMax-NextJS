@@ -1,7 +1,8 @@
 
 'use client'
 
-import { Box, Chip } from "@mui/material";
+import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';

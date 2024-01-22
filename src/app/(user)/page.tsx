@@ -1,11 +1,12 @@
 
 // page: định nghĩa giao diện cho page, hình thù của component (màn hình)
 
-import { Container } from "@mui/material"
+import Container from "@mui/material/Container"
 import MainSlider from "@/components/main/main.slider";
 import { sendRequest } from "@/ultis/api";
 
 // import AppHeader from "@/components/header/app.header";
+
 
 export default async function HomePage() {
 

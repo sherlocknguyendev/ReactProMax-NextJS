@@ -3,7 +3,7 @@
 
 import { useTrackContext } from '@/lib/track.wrapper';
 import { useHasMounted } from '@/ultis/customHook';
-import { Container } from '@mui/material';
+import Container from '@mui/material/Container';
 import AppBar from '@mui/material/AppBar';
 import { useEffect, useRef } from 'react';
 import AudioPlayer from 'react-h5-audio-player';

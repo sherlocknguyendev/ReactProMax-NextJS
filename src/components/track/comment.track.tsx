@@ -2,7 +2,8 @@
 'use client'
 
 import { fetchDefaultImages, sendRequest } from "@/ultis/api";
-import { Box, TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 import { useSession } from "next-auth/react";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -10,6 +11,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import WaveSurfer from "wavesurfer.js";
 import { useHasMounted } from "@/ultis/customHook";
+import Image from "next/image";
 dayjs.extend(relativeTime)
 
 interface IProps {
@@ -102,11 +104,10 @@ const CommentTrack = (props: IProps) => {
                         width: '190px'
 
                     }}>
-                    <img
-                        style={{
-                            width: 120,
-                            height: 120
-                        }}
+                    <Image
+                        width={120}
+                        height={120}
+                        alt="comment-left"
                         src={fetchDefaultImages(session?.user?.type!)} />
                     <div>
                         {session?.user?.email}
@@ -118,11 +119,10 @@ const CommentTrack = (props: IProps) => {
                         return (
                             <Box key={item._id} sx={{ display: 'flex', justifyContent: 'space-between', margin: '24px 0', alignItems: 'center', }}>
                                 <div className="title" style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                                    <img
-                                        style={{
-                                            width: 40,
-                                            height: 40
-                                        }}
+                                    <Image
+                                        width={40}
+                                        height={40}
+                                        alt="comment-right"
                                         src={fetchDefaultImages(item?.user?.type)} />
 
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>

@@ -17,10 +17,11 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Avatar, Container } from '@mui/material';
+import Container from '@mui/material/Container';
 import Link from 'next/link';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { fetchDefaultImages } from '@/ultis/api';
+import Image from 'next/image';
 
 
 // Search này là ví dụ cho styled-component
@@ -235,14 +236,12 @@ export default function AppHeader() {
                                     Upload
                                 </Link>
 
-                                <img
+                                <Image
                                     onClick={handleProfileMenuOpen}
-                                    style={{
-                                        height: 45,
-                                        width: 45,
-                                        cursor: 'pointer'
-                                    }}
+                                    width={45}
+                                    height={45}
                                     src={fetchDefaultImages(session.user.type)}
+                                    alt='avatar-header'
                                 />
                                 {/* <Avatar onClick={handleProfileMenuOpen}>VQ</Avatar> */}
                             </>

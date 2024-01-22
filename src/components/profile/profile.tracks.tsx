@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Card, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import { useTrackContext } from '@/lib/track.wrapper';
 import Link from 'next/link';
+import { convertSlugUrl } from '@/ultis/api';
 
 
 const ProfileListTracks = (props: any | ITrackTop) => {
@@ -28,7 +29,7 @@ const ProfileListTracks = (props: any | ITrackTop) => {
                             textDecoration: 'none',
                             color: 'unset'
                         }}
-                        href={`/track/${data._id}?audio=${data.trackUrl}&id=${data._id}`}
+                        href={`/track/${convertSlugUrl(data.title)}-${data._id}.html?audio=${data.trackUrl}`}
                     >
                         <Typography component="div" variant="h5">
                             {data.title}

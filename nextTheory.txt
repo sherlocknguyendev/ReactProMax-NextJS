@@ -91,3 +91,19 @@
         2 là database backend do chúng ta kiểm soát.
         Cần lưu tại 2 nơi, vì ví dụ, người dùng sau khi login sẽ tiến hành thao tác với hệ
         thống => tạo user dễ quản lý (theo id)
+
+
+-------------------------------------------------------------------------------------
+
+- Các cách tăng SEO:
+ -> Next.js cung cấp các API về Metadata, giúp chúng ta có thể cải thiện SEO cũng như khả năng chia sẻ website (qua các mạng xã hội)
+    1. Thêm tiêu đề, miêu tả cho web page
+    2. Thêm miêu tả, image khi share link qua các mạng xã hội như Facebook, Twitter..
+    3. Thêm logo cho website
+    4. Tạo URL "thân thiện" cho việc search (khái niệm slug)
+    5. File hỗ trợ cho bot crawl
+    6. Responsive Images với Next Image
+
+- Loaders: Là cơ chế để resize hình ảnh 
+    -> Đối với ảnh phía local thì NextJS nó chính là loaders
+    -> Đối với ảnh ở các back-end ngoài thì loaders là các thư viện khác

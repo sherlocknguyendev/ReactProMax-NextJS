@@ -11,6 +11,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Divider from '@mui/material/Divider';
 import Link from "next/link";
+import { convertSlugUrl } from "@/ultis/api";
+import Image from "next/image";
 
 interface IProps {
     data: ITrackTop[],
@@ -57,9 +59,36 @@ const MainSlider = (props: IProps) => {
         infinite: true,
         speed: 500,
         slidesToShow: 5,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+
     };
     // Box === div: Box cs 1 props là component -> component = 'tag' gì thì sẽ render ra 'tag' đấy
 
@@ -86,8 +115,24 @@ const MainSlider = (props: IProps) => {
                 {data.map((item) => {
                     return (
                         <div className="track" key={item._id}>
-                            <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${item.imgUrl}`} alt="" />
-                            <Link href={`/track/${item._id}?audio=${item.trackUrl}&id=${item._id}`}>
+                            <div
+                                style={{
+                                    width: '100%',
+                                    height: '150px',
+                                    position: 'relative'
+                                }}
+                            >
+                                {/* Image Component remote (data ở back-end) */}
+                                <Image
+                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${item.imgUrl}`}
+                                    alt="image from back-end"
+                                    fill // thay cho width vs height
+                                    style={{
+                                        objectFit: 'contain'
+                                    }}
+                                />
+                            </div>
+                            <Link href={`/track/${convertSlugUrl(item.title)}-${item._id}.html?audio=${item.trackUrl}`}>
                                 <h4>{item.title}</h4>
                             </Link>
                             <h5>{item.description}</h5>

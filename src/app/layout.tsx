@@ -5,6 +5,8 @@ import ThemeRegistry from '@/components/theme-registry/theme.registry';
 import NextAuthWrapper from '@/lib/next.auth.wrapper';
 import { TrackContextProvider } from '@/lib/track.wrapper';
 import { ToastProvider } from '@/ultis/toast';
+import Image from 'next/image';
+import sunset from '../../public/sunset.jpg';
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,6 +24,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </ToastProvider>
           </NextAuthWrapper>
         </ThemeRegistry>
+
+        {/* Image Component: Biến đổi ảnh gốc thành ảnh khác làm sao tăng tốc độ load và dung lương (ĐỒNG THỜI CÓ TÍNH THUỘC TÍNH RESPONSIVE) -> tăng trải nghiệm user */}
+        {/* <Image
+          src={sunset} --> image local 
+          alt='sunset image'
+          sizes="100vw"
+          // Make the image display full width
+          style={{
+            width: '100%',
+            height: 'auto',
+          }}
+        /> */}
+
       </body>
     </html>
   );

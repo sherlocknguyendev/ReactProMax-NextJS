@@ -5,14 +5,15 @@ import { useWavesurfer } from '@/ultis/customHook';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { WaveSurferOptions } from 'wavesurfer.js';
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
-import { Key, PauseCircleSharp, PlayArrowSharp } from '@mui/icons-material';
+import { PauseCircleSharp, PlayArrowSharp } from '@mui/icons-material';
 
 import './wave.track.scss'
-import { Tooltip } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import { fetchDefaultImages, sendRequest } from '@/ultis/api';
 import { useTrackContext } from '@/lib/track.wrapper';
 import CommentTrack from './comment.track';
 import LikeTrack from './like.track';
+import Image from 'next/image';
 
 
 interface IProps {
@@ -22,6 +23,7 @@ interface IProps {
 
 // Component
 const WaveTrack = (props: IProps) => {
+
 
     const router = useRouter();
     const firstViewRef = useRef(true); // Dùng ref thay vì state để tránh re-render
@@ -243,21 +245,22 @@ const WaveTrack = (props: IProps) => {
                             {comments?.map((item: ITrackComment) => {
                                 return (
                                     <Tooltip arrow title={item.content} key={item._id}>
-                                        <img
+                                        <Image
                                             onPointerMove={(e) => {
                                                 const hoverWave = hoverWaveRef.current!;
                                                 hoverWave.style.width = calcLeft(item.moment)
                                             }}
                                             key={item._id}
+                                            width={20}
+                                            height={20}
                                             style={{
-                                                height: 20,
-                                                width: 20,
                                                 zIndex: 20,
                                                 position: 'absolute',
                                                 top: 70,
                                                 left: calcLeft(item.moment)
                                             }}
                                             src={fetchDefaultImages(item?.user?.type)}
+                                            alt='avatar-comment'
                                         />
                                     </Tooltip>
                                 )
@@ -269,7 +272,8 @@ const WaveTrack = (props: IProps) => {
                 <div className='right-content' style={{ alignSelf: 'center', width: 250, height: 250 }}>
                     {
                         track?.imgUrl ?
-                            <img
+                            <Image
+                                alt='image-track'
                                 src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track?.imgUrl}`}
                                 width={250}
                                 height={250}
