@@ -12,19 +12,19 @@ export default async function HomePage() {
 
   // Chỉ mình NextJS 13 với Server Component mới viết đc 'async await' tại chính đầu Component đó luôn (k cs khái niệm 'async await' Component với CSR)
   const chills = await sendRequest<IBackendRes<ITrackTop[]>>({
-    url: "http://localhost:8000/api/v1/tracks/top",
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/top`,
     method: "POST",
     body: { category: "CHILL", limit: 10 },
   })
 
   const workouts = await sendRequest<IBackendRes<ITrackTop[]>>({
-    url: "http://localhost:8000/api/v1/tracks/top",
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/top`,
     method: "POST",
     body: { category: "WORKOUT", limit: 10 },
   })
 
   const parties = await sendRequest<IBackendRes<ITrackTop[]>>({
-    url: "http://localhost:8000/api/v1/tracks/top",
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/top`,
     method: "POST",
     body: { category: "PARTY", limit: 10 },
   })

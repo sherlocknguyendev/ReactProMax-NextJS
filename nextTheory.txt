@@ -107,3 +107,19 @@
 - Loaders: Là cơ chế để resize hình ảnh 
     -> Đối với ảnh phía local thì NextJS nó chính là loaders
     -> Đối với ảnh ở các back-end ngoài thì loaders là các thư viện khác
+
+-------------------------------------------------------------------------------------
+- SSG (Static Site Generation) (chỉ có tác dụng khi build project)
+    + SSG là cách "tạo trước file .html" cho webpage.
+    + Client gửi request -> server "gửi lại ngay lập tức" file .html đã được chuẩn bị trước, mà không tốn công "generate"
+    => đấy gọi là "static" (bị động/tĩnh)
+    => SSG giúp tăng trải nghiệm ng dùng (tốc độ load)
+
+- ISR (Incremental Static Regeneration - tạo lại file tĩnh tăng)
+    -> Dùng để update/sửa file html sau khi đã build rồi (k cần update/sửa rồi build lại)
+    + 2 cách update/sửa là --> Time-based Revalidation: cài theo thời gian or On-demand Revalidation: cài theo yêu cầu (gọi api)
+
+- RevalidateTag: Làm mới nơi nào có đúng 'tag' đấy
+
+- ReavalidatePath: Làm mới cả 1 path(route) -> khác với router.refresh không clear "Data cache" (chỉ clear router cache và re-render page) => 
+dùng cache: "no-store :v

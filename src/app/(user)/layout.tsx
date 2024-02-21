@@ -6,8 +6,8 @@ import Script from "next/script";
 
 import type { Metadata } from 'next'
 export const metadata: Metadata = {
-  title: 'Tiêu đề from Layout',
-  description: 'Miêu tả from Layout',
+  title: 'Home Page',
+  description: 'Miêu tả của home page',
 }
 
 const JsonLDTest = {

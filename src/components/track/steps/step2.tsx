@@ -109,7 +109,7 @@ const Step2 = (props: IProps) => {
             const formData = new FormData();
             formData.append('fileUpload', image); //fileUpload: là key ở phần Body của Postman để cho BE hiểu 
             try {
-                const res = await axios.post("http://localhost:8000/api/v1/files/upload", formData,
+                const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/files/upload`, formData,
                     {
                         headers: {
                             Authorization: `Bearer ${session?.access_token}`,
@@ -152,7 +152,7 @@ const Step2 = (props: IProps) => {
 
     const handleSubmit = async () => {
         const res = await sendRequest<IBackendRes<INewTrack[]>>({
-            url: "http://localhost:8000/api/v1/tracks",
+            url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks`,
             method: "POST",
             headers: {
                 'Authorization': `Bearer ${session?.access_token}`,
@@ -170,6 +170,17 @@ const Step2 = (props: IProps) => {
         if (res && res.data) {
             toast.success('Create trask successfully!');
             setValue(0);
+
+            await sendRequest<IBackendRes<any>>({
+                url: `/api/revalidate`,
+                method: 'POST',
+                queryParams: {
+                    tag: 'track-by-profile',
+                    secret: 'sherlockNguyenDev'
+                }
+            })
+            // --> Để clear data cache và lấy data mới (build mode)
+
         } else {
             toast.error(res.message);
         }

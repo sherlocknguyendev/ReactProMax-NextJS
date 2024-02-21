@@ -22,6 +22,8 @@ import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { fetchDefaultImages } from '@/ultis/api';
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
+import ActiveLink from './active.link';
 
 
 // Search này là ví dụ cho styled-component
@@ -182,6 +184,8 @@ export default function AppHeader() {
         </Menu>
     );
 
+    const router = useRouter();
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundColor: '#4c5c6c' }}>
@@ -196,7 +200,9 @@ export default function AppHeader() {
                                 display: { xs: 'none', sm: 'block' },
                                 "> a": {
                                     color: 'unset',
-                                    textDecoration: 'unset'
+                                    textDecoration: 'unset',
+
+
                                 }
                             }}
 
@@ -211,6 +217,12 @@ export default function AppHeader() {
                             <StyledInputBase
                                 placeholder="Search…"
                                 inputProps={{ 'aria-label': 'search' }}
+                                onKeyDown={(e: any) => {
+                                    if (e.key === "Enter") {
+                                        if (e?.target?.value)
+                                            router.push(`/search?q=${e?.target?.value}`)
+                                    }
+                                }}
                             />
                         </Search>
                         <Box sx={{ flexGrow: 1 }} />
@@ -222,29 +234,37 @@ export default function AppHeader() {
 
                             "> a": {
                                 color: 'unset',
-                                textDecoration: 'unset'
+                                textDecoration: 'unset',
+                                "&.active": {
+                                    background: '#3b4a59',
+                                    color: '#cefaff',
+                                    borderRadius: '5px',
+                                    padding: '3px'
+                                }
+
                             }
                         }}>
-                            {session ? <>
-                                <Link href={'/playlist'}>
-                                    Playlists
-                                </Link>
-                                <Link href={'/like'}>
-                                    Likes
-                                </Link>
-                                <Link href={'/track/upload'}>
-                                    Upload
-                                </Link>
+                            {session ?
+                                <>
+                                    <ActiveLink href={'/playlist'}>
+                                        Playlists
+                                    </ActiveLink>
+                                    <ActiveLink href={'/like'}>
+                                        Likes
+                                    </ActiveLink>
+                                    <ActiveLink href={'/track/upload'}>
+                                        Upload
+                                    </ActiveLink>
 
-                                <Image
-                                    onClick={handleProfileMenuOpen}
-                                    width={45}
-                                    height={45}
-                                    src={fetchDefaultImages(session.user.type)}
-                                    alt='avatar-header'
-                                />
-                                {/* <Avatar onClick={handleProfileMenuOpen}>VQ</Avatar> */}
-                            </>
+                                    <Image
+                                        onClick={handleProfileMenuOpen}
+                                        width={45}
+                                        height={45}
+                                        src={fetchDefaultImages(session.user.type)}
+                                        alt='avatar-header'
+                                    />
+                                    {/* <Avatar onClick={handleProfileMenuOpen}>VQ</Avatar> */}
+                                </>
                                 :
                                 <>
                                     <Link href={'/auth/signin'} >

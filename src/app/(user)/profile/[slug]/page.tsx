@@ -4,6 +4,13 @@ import ProfileListTracks from "@/components/profile/profile.tracks";
 import { sendRequest } from "@/ultis/api";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import type { Metadata } from 'next';
+
+
+export const metadata: Metadata = {
+    title: 'Profile của bạn',
+    description: 'Miêu tả của profile page',
+}
 
 const ProfilePage = async ({ params }: { params: { slug: string } }) => {
 
@@ -13,9 +20,13 @@ const ProfilePage = async ({ params }: { params: { slug: string } }) => {
 
 
     const tracks = await sendRequest<IBackendRes<IModelPaginate<ITrackTop>>>({
-        url: "http://localhost:8000/api/v1/tracks/users?current=1&pageSize=10",
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/users?current=1&pageSize=10`,
         method: "POST",
         body: { id: id },
+        nextOption: {
+            // cache: 'no-store', // K dùng cơ chế caching data của Next nữa
+            next: { tags: ['track-by-profile'] } // revalidateByTag
+        }
     })
 
     const data = tracks?.data?.result ?? [];

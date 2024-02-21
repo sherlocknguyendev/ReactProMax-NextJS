@@ -170,7 +170,14 @@ const AuthSignIn = () => {
                                 signIn('github')
                             }}
                         />
-                        <GoogleIcon titleAccess="Login with Google" sx={{ fontSize: 34, cursor: 'pointer' }} />
+                        <GoogleIcon
+                            titleAccess="Login with Google"
+
+                            sx={{ fontSize: 34, cursor: 'pointer' }}
+                            onClick={() => {
+                                signIn('google')
+                            }}
+                        />
                     </div>
                 </Grid>
             </Grid>
